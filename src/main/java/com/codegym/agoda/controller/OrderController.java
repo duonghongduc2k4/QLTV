@@ -71,14 +71,11 @@ public class OrderController {
 
     @PutMapping("/{id}")
     public ResponseEntity<HouseAccount> updateStatus(@RequestBody OrderDto dto, @PathVariable int id) {
-        HouseAccount houseAccount1 = iOrderRepository.findById(id).get();
-        houseAccount1.setTimeEnd(dto.getTimeEnd());
-        houseAccount1.setTimeStart(dto.getTimeStart());
-        houseAccount1.setTotal(dto.getTotal());
-        houseAccount1.setHouse(iHouseRepository.findById(dto.getIdHouse()).get());
-        houseAccount1.setAccount(iAccountRepo.findById(dto.getIdAccount()).get());
-        orderService.checkStatus(houseAccount1);
-        return new ResponseEntity<>(houseAccount1, HttpStatus.OK);
+            HouseAccount houseAccount1 = iOrderRepository.findById(dto.getId()).get();
+            houseAccount1.setStatus(iStatusRepo.findById(7).get());
+            iOrderRepository.save(houseAccount1);
+
+            return new ResponseEntity<>(houseAccount1, HttpStatus.OK);
     }
 
     @PutMapping("/yes/{id}")

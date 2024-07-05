@@ -12,14 +12,13 @@ public class AccountService {
     @Autowired
     private IAccountRepo iAccountRepo;
 
-    public Account checkAccount(Account account){
+    public Account    checkAccount(Account account){
         List<Account> accountList = iAccountRepo.findAll();
         for (Account acc : accountList){
             if (account.getUsername().equals(acc.getUsername()) && account.getPassword().equals(acc.getPassword())){
                 return acc;
             }
         }
-
         return null;
     }
 }

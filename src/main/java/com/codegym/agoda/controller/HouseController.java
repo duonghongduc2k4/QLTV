@@ -3,10 +3,7 @@ package com.codegym.agoda.controller;
 import com.codegym.agoda.dto.HouseDto;
 import com.codegym.agoda.dto.PaginateRequest;
 import com.codegym.agoda.model.*;
-import com.codegym.agoda.repository.IHouseRepository;
-import com.codegym.agoda.repository.IImageRepo;
-import com.codegym.agoda.repository.IRoomRepo;
-import com.codegym.agoda.repository.ITypeRoomRepo;
+import com.codegym.agoda.repository.*;
 import com.codegym.agoda.service.impl.HouseService;
 import com.codegym.agoda.service.impl.TypeRoomService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +29,8 @@ public class HouseController {
     private IImageRepo iImageRepo;
     @Autowired
     private IRoomRepo iRoomRepo;
+    @Autowired
+    private IStatusRepo iStatusRepo;
 
 
 
@@ -89,6 +88,13 @@ public class HouseController {
     public ResponseEntity<House> save(@ModelAttribute HouseDto houseDto) throws IOException {
         House house = houseService.saveHouse(houseDto);
         return new ResponseEntity<>(house, HttpStatus.CREATED);
+    }
+    @PutMapping("/no/{id}")
+    public ResponseEntity<House> update(@ModelAttribute HouseDto dto,@PathVariable Long id){
+            House house = houseService.findById(dto.getId()).get();
+            house.setStatus(iStatusRepo.findById(6).get());
+            houseService.save(house);
+        return new ResponseEntity<>(house,HttpStatus.OK);
     }
     @PutMapping("/{id}")
     public ResponseEntity<House> update(@ModelAttribute HouseDto dto, @PathVariable int id) throws IOException {

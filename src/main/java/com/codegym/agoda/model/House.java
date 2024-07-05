@@ -29,9 +29,11 @@ public class House {
     private List<Room> rooms;
 
     @ManyToOne
+    @JoinColumn(name = "status_id")
     private Status status;
 
     @ManyToOne
+    @JoinColumn(name = "account_id")
     private Account account;
 
     @OneToMany(mappedBy = "house", cascade = CascadeType.ALL)

@@ -1,5 +1,6 @@
 package com.codegym.agoda.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -15,15 +16,15 @@ public class HouseAccount {
     private int total ;
     private int revenue;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "house_id")
     private House house;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id")
     private Account account;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     private Status status;
 
 }
